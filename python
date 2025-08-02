@@ -1,0 +1,23 @@
+import yfinance as yf
+import datetime
+
+def fetch_sti():
+    sti_tickers = [
+        "A17U.SI", "C38U.SI", "9CI.SI", "C09.SI", "D01.SI", "D05.SI", "J69U.SI",
+        "BUOU.SI", "G13.SI", "H78.SI", "J36.SI", "BN4.SI", "AJBU.SI", "ME8U.SI",
+        "M44U.SI", "N2IU.SI", "O39.SI", "S58.SI", "5E2.SI", "U96.SI", "C6L.SI",
+        "S68.SI", "Z74.SI", "S63.SI", "Y92.SI", "U11.SI", "U14.SI", "V03.SI", 
+        "F34.SI", "BS6.SI"
+    ]
+    data = yf.download(sti_tickers, period="1d", group_by='ticker')
+    date = datetime.datetime.now().strftime("%Y-%m-%d")
+    print(f"\n--- STI Data on {date} ---\n")
+    for ticker in sti_tickers:
+        try:
+            close = data[ticker]['Close'][-1]
+            print(f"{ticker}: {close:.2f}")
+        except Exception:
+            print(f"{ticker}: No data")
+
+if __name__ == "__main__":
+    fetch_sti()
